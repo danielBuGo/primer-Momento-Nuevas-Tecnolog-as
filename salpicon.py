@@ -31,6 +31,10 @@ while respuesta != 2:
         frutas = sorted(frutas, key=lambda x: x['precioUnitario'], reverse=True)
         for fruta in frutas:
          print(fruta) 
+    elif opcion == 4:
+         print("FRUTA MÁS BARATA")
+         masEconomica = min(frutas, key=lambda x: x['precioUnitario'])
+         print(f"Nombre: {masEconomica['nombre']}, Precio Unitario: {masEconomica['precioUnitario']}")     
     else:
         print("Gracias por visitarnos") 
 else:

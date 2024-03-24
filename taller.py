@@ -28,24 +28,24 @@ while respuesta != 2:
         idProducto += 1
         articulo['nombre'] = input("Ingrese el nombre del producto: ")
         articulo['precio'] = int(input("Cual es el precio unitario?: "))     
-        while True:           
-          zona['ubicacion'] = input("Ingrese la zona de ubicacion en la tienda (A, B, C o D): ").upper()
-          if zona['ubicacion'] in zonas:         
-            
-            break
-          else:
-            print("La ubicación ingresada no es válida. Por favor, ingrese una de las opciones: A, B, C o D.")
                  
-        zona['cantidad'] = int(input("Cuantos va a llevar?: "))
-        while zona["cantidad"] < 0:
-            print("Debes ingresar una cantidad valida.")
-            zona['cantidad'] = int(input("Cuantos va a llevar?: "))
-        
-        if zona["cantidad"] <= 50:
-            zonas[zona['ubicacion']]['cantidad'] = zona["cantidad"]
+        ubicacion = input("Ingrese la zona de ubicacion en la tienda (A, B, C o D): ").upper()
+        while ubicacion not in zonas:
+          print("La ubicación ingresada no es válida. Por favor, ingrese una de las opciones: A, B, C o D.")
+          ubicacion = input("Ingrese la zona de ubicacion en la tienda (A, B, C o D): ").upper()
+
+        zona['ubicacion'] = ubicacion
+                 
+        cantidad = int(input("Cuantos va a llevar?: "))
+        while cantidad < 0:
+            print("Debes ingresar una cantidad válida.")
+            cantidad = int(input("Cuantos va a llevar?: "))        
+        if cantidad <= 50:
+            zonas[ubicacion]['cantidad'] = cantidad
         else:
             print("No puedes llevar más de 50 artículos en una misma zona")
-            continue     
+            continue
+        articulo['cantidad'] = cantidad     
         articulo['Zona'] = zona 
         articulo['descripcion'] = input("Ingrese una breve descripcion del producto: ")
         articulo['fabricante'] = input("Ingrese el fabricante del prodcuto: ")
@@ -74,34 +74,26 @@ while respuesta != 2:
         print(f"No se encontró ningún producto con el nombre '{buscarProducto}'.")
           
     elif opcion == 4:
-      modificarArticulo = int(input("Que articulo deseas modificar?: "))
-      articuloSeleccionado = None
+      modificarArticulo = int(input("Ingrese el ID del producto que desea modificar: "))
+      nuevaCantidad = int(input("Ingrese la nueva cantidad de unidades compradas: "))
+      encontrado = False
       for articulo in articulos:
-        modificarArticulo = int(input("Ingrese el ID del producto que desea modificar: "))
-        nuevaCantidad = int(input("Ingrese la nueva cantidad de unidades compradas: "))
-        encontrado = False
-        for articulo in articulos:
-            if articulo['id'] == modificarArticulo:
-                encontrado = True
-                if nuevaCantidad <= 50:
-                    articulo['Zona']['cantidad'] = nuevaCantidad
-                    print(f"Se ha modificado la cantidad de unidades del producto '{articulo['nombre']}' a {nuevaCantidad}.")
-                else:
-                    print("No puedes llevar más de 50 artículos en una misma zona")
-                break
-        if not encontrado:
-            print(f"No se encontró ningún producto con el ID '{modificarArticulo}'.")
-          
-        else:
-            print('no seleccionaste una vanda valida')                  
+        if articulo['id'] == modificarArticulo:
+          encontrado = True
+          if nuevaCantidad <= 50:
+            ubicacionZona = articulo['Zona']['ubicacion']
+            zonas[ubicacionZona]['cantidad'] -= articulo['cantidad']
+            articulo['Zona']['cantidad'] = nuevaCantidad
+            zonas[ubicacionZona]['cantidad'] += nuevaCantidad
+            print(f"Se ha modificado la cantidad de unidades del producto '{articulo['nombre']}' a {nuevaCantidad}.")
+          else:
+            print("No puedes llevar más de 50 artículos en una misma zona")
+            break
+      if not encontrado:
+        print(f"No se encontró ningún producto con el ID '{modificarArticulo}'.")                 
                
     else:
       print("Saliste del menú")
       
 else:
   print("Fin")
-        
-        
-        
-
-    

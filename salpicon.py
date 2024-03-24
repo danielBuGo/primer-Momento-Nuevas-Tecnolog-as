@@ -25,7 +25,7 @@ while respuesta != 2:
         costoTotal = 0 
         for fruta in frutas:
           costoTotal += fruta['precioUnitario'] * fruta['cantidad']
-          print(f"El costo total de tu salpicón es de {costoTotal}")
+        print(f"El costo total de tu salpicón es de {costoTotal}")
           
     elif opcion == 3:
         frutas = sorted(frutas, key=lambda x: x['precioUnitario'], reverse=True)
@@ -36,6 +36,7 @@ while respuesta != 2:
          masEconomica = min(frutas, key=lambda x: x['precioUnitario'])
          print(f"Nombre: {masEconomica['nombre']}, Precio Unitario: {masEconomica['precioUnitario']}")     
     else:
-        print("Gracias por visitarnos") 
+        print("Gracias por visitarnos")
+        break 
 else:
     print("vuelvas pronto")            
